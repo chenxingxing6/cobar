@@ -28,15 +28,15 @@ import java.util.Properties;
 public class FetchSizeMain {
 
     public static void main(String[] args) throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/cndb?defaultFetchSize=5&useCursorFetch=true";
+        String url = "jdbc:mysql://localhost:3306/lxh1?defaultFetchSize=5&useCursorFetch=true";
         Properties info = new Properties();
-        info.setProperty("user", "test");
+        info.setProperty("user", "root");
         info.setProperty("password", "");
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url, info);
             long t1 = System.currentTimeMillis();
-            PreparedStatement pstmt = conn.prepareStatement("select id from t1");
+            PreparedStatement pstmt = conn.prepareStatement("select id from tb1");
             System.out.println("set fetch size:" + pstmt.getFetchSize());
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
