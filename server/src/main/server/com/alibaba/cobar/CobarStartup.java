@@ -31,7 +31,6 @@ public final class CobarStartup {
             // init
             CobarServer server = CobarServer.getInstance();
             server.beforeStart(dateFormat);
-
             // startup
             server.startup();
         } catch (Throwable e) {

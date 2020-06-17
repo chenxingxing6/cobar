@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- - Copyright 1999-2012 Alibaba Group.
- -  
- - Licensed under the Apache License, Version 2.0 (the "License");
- - you may not use this file except in compliance with the License.
- - You may obtain a copy of the License at
- -  
- -      http://www.apache.org/licenses/LICENSE-2.0
- -  
- - Unless required by applicable law or agreed to in writing, software
- - distributed under the License is distributed on an "AS IS" BASIS,
- - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- - See the License for the specific language governing permissions and
- - limitations under the License.
--->
 <!DOCTYPE cobar:schema SYSTEM "schema.dtd">
 <cobar:schema xmlns:cobar="http://cobar.alibaba.com/">
 
@@ -39,7 +24,10 @@
     </property>
   </dataNode>
 
-  <!-- 数据源定义，数据源是一个具体的后端数据连接的表示。-->
+
+  <!-- 数据源定义 完成了从dbtest中tb2到dbtest2中的tb2（即192.168.0.1:3306/dbtest2库）
+  和dbtest3中的tb2（即192.168.0.1:3306/dbtest3库）的映射，那么它们是怎么被映射呢，映射
+  算法是在rule.xml中配置的。-->
   <dataSource name="dsTest" type="mysql">
     <property name="location">
       <location>192.168.0.1:3306/dbtest1</location>
@@ -50,5 +38,4 @@
     <property name="password"></property>
     <property name="sqlMode">STRICT_TRANS_TABLES</property>
   </dataSource>
-
 </cobar:schema>

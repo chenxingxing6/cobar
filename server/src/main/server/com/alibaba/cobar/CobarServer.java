@@ -93,14 +93,14 @@ public class CobarServer {
         }
     }
 
+    // 服务启动
     public void startup() throws IOException {
-        // server startup
         LOGGER.info("===============================================");
         LOGGER.info(NAME + " is ready to startup ...");
         SystemConfig system = config.getSystem();
         timer.schedule(updateTime(), 0L, TIME_UPDATE_PERIOD);
 
-        // startup processors
+        // 1.startup processors 根据系统内核数量，初始化相应数量的nio处理器
         LOGGER.info("Startup processors ...");
         int handler = system.getProcessorHandler();
         int executor = system.getProcessorExecutor();
@@ -112,13 +112,13 @@ public class CobarServer {
         }
         timer.schedule(processorCheck(), 0L, system.getProcessorCheckPeriod());
 
-        // startup connector
+        // 2.startup connector 初始化连接器
         LOGGER.info("Startup connector ...");
         connector = new NIOConnector(NAME + "Connector");
         connector.setProcessors(processors);
         connector.start();
 
-        // init dataNodes
+        // 3.init dataNodes 节点初始化
         Map<String, MySQLDataNode> dataNodes = config.getDataNodes();
         LOGGER.info("Initialize dataNodes ...");
         for (MySQLDataNode node : dataNodes.values()) {
@@ -127,7 +127,7 @@ public class CobarServer {
         timer.schedule(dataNodeIdleCheck(), 0L, system.getDataNodeIdleCheckPeriod());
         timer.schedule(dataNodeHeartbeat(), 0L, system.getDataNodeHeartbeatPeriod());
 
-        // startup manager
+        // 4.startup manager 管理线程启动
         ManagerConnectionFactory mf = new ManagerConnectionFactory();
         mf.setCharset(system.getCharset());
         mf.setIdleTimeout(system.getIdleTimeout());
@@ -136,7 +136,7 @@ public class CobarServer {
         manager.start();
         LOGGER.info(manager.getName() + " is started and listening on " + manager.getPort());
 
-        // startup server
+        // 5.startup server 服务线程启动
         ServerConnectionFactory sf = new ServerConnectionFactory();
         sf.setCharset(system.getCharset());
         sf.setIdleTimeout(system.getIdleTimeout());
